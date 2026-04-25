@@ -191,7 +191,8 @@ export class SceneAdvancedTools implements ToolExecutor {
                         },
                         args: {
                             type: 'array',
-                            description: 'Method arguments',
+                            items: { type: 'string' },
+                            description: 'Method arguments (use JSON-serialized strings for non-string values)',
                             default: []
                         }
                     },
@@ -214,7 +215,8 @@ export class SceneAdvancedTools implements ToolExecutor {
                         },
                         args: {
                             type: 'array',
-                            description: 'Method arguments',
+                            items: { type: 'string' },
+                            description: 'Method arguments (use JSON-serialized strings for non-string values)',
                             default: []
                         }
                     },
