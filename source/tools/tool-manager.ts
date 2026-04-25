@@ -10,7 +10,8 @@ export class ToolManager {
     constructor() {
         this.settings = this.readToolManagerSettings();
         this.initializeAvailableTools();
-        
+        this.syncConfigurationsWithAvailableTools();
+
         // 如果没有配置，自动创建一个默认配置
         if (this.settings.configurations.length === 0) {
             console.log('[ToolManager] No configurations found, creating default configuration...');
@@ -415,6 +416,25 @@ export class ToolManager {
             configurations: this.getConfigurations(),
             maxConfigSlots: this.settings.maxConfigSlots
         };
+    }
+
+    private syncConfigurationsWithAvailableTools(): void {
+        const availableToolNames = new Set(this.availableTools.map(t => t.name));
+
+        // 清理配置中不存在的工具
+        this.settings.configurations.forEach(config => {
+            config.tools = config.tools.filter(tool => availableToolNames.has(tool.name));
+        });
+
+        // 检查当前配置ID是否有效
+        const currentConfigExists = this.settings.configurations.some(c => c.id === this.settings.currentConfigId);
+        if (!currentConfigExists && this.settings.configurations.length > 0) {
+            this.settings.currentConfigId = this.settings.configurations[0].id;
+        } else if (this.settings.configurations.length === 0) {
+            this.settings.currentConfigId = '';
+        }
+
+        this.saveToolManagerSettings(this.settings);
     }
 
     private saveSettings(): void {

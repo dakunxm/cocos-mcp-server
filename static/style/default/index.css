@@ -360,8 +360,11 @@ ui-prop {
 /* 按钮样式 */
 ui-button.small {
     font-size: 12px;
-    padding: 4px 8px;
+    font-weight: 600;
+    padding: 0px 10px 4px 10px;
     min-width: auto;
+    height: 26px;
+    line-height: 24px;
 }
 
 ui-button.secondary {
